@@ -69,24 +69,22 @@ que hemos generado para cada uno de los sitios de nuestros clientes entre el 1 d
 Solicite esta consulta por ID de cliente. Presente una segunda consulta que muestre todos los clientes, los nombres del sitio y 
 el número total de clientes potenciales generados en cada sitio en todo momento. */
 
-SELECT 
-CONCAT(cli.first_name,' ',cli.last_name) as NOMBRE,
-sit.domain_name SITIO,
-count(lea.leads_id) CLI_POTENCIALES,
-min(lea.registered_datetime) FECHA
-FROM clients cli
-JOIN sites sit ON sit.client_id=cli.client_id
-JOIN leads lea ON lea.site_id=sit.site_id
-WHERE 
-lea.registered_datetime BETWEEN '2011-01-01' AND '2011-12-31' 
-GROUP BY NOMBRE, SITIO
-ORDER BY NOMBRE ;
 
 SELECT 
 CONCAT(cli.first_name,' ',cli.last_name) as NOMBRE,
 sit.domain_name SITIO,
 COUNT(lea.leads_id) CLI_POTENCIALES,
 MIN(CONCAT(MONTHNAME(lea.registered_datetime), ' ',DAY(lea.registered_datetime), ', ' ,YEAR(lea.registered_datetime))) FECHA
+FROM clients cli
+LEFT JOIN sites sit ON sit.client_id=cli.client_id
+LEFT JOIN leads lea ON lea.site_id=sit.site_id
+GROUP BY NOMBRE, SITIO
+ORDER BY NOMBRE ;
+
+SELECT 
+CONCAT(cli.first_name,' ',cli.last_name) as NOMBRE,
+sit.domain_name SITIO,
+COUNT(lea.leads_id) CLI_POTENCIALES
 FROM clients cli
 JOIN sites sit ON sit.client_id=cli.client_id
 JOIN leads lea ON lea.site_id=sit.site_id
