@@ -95,15 +95,6 @@ lea.registered_datetime BETWEEN '2011-01-01' AND '2011-12-31'
 GROUP BY NOMBRE, SITIO
 ORDER BY NOMBRE ;
 
-SELECT 
-CONCAT(cli.first_name,' ',cli.last_name) as NOMBRE,
-sit.domain_name SITIO,
-count(lea.leads_id) CLI_POTENCIALES
-FROM clients cli
-LEFT JOIN sites sit ON sit.client_id=cli.client_id
-LEFT JOIN leads lea ON lea.site_id=sit.site_id 
-GROUP BY NOMBRE, SITIO
-ORDER BY NOMBRE ;
 
 /*9. Escriba una sola consulta que recupere los ingresos totales recaudados de cada cliente para cada mes del año. 
 Pídalo por ID de cliente. */
